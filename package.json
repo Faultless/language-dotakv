@@ -1,10 +1,10 @@
 {
-  "name": "packages",
+  "name": "language-dotakv",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "This is a port of Dota KV sublime package.",
   "keywords": [
   ],
-  "repository": "https://github.com/atom/packages",
+  "repository": "https://github.com/Faultless/language-dotakv",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
