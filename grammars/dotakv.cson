@@ -1,0 +1,33 @@
+fileTypes: [
+  "kv"
+  "txt"
+]
+name: "Dota 2 KV"
+patterns: [
+  {
+    comment: "A single line comment"
+    match: "//.*"
+    name: "comment.line.txt"
+  }
+  {
+    comment: "Ability Special Variable"
+    match: "%[^\\s]*"
+    name: "variable.parameter"
+  }
+  {
+    comment: "A group of other sections or KV pairs"
+    match: "^\\s*(?!\".*?\"\\s*\".*?\")\".*?\""
+    name: "support.class"
+  }
+  {
+    captures:
+      "1":
+        name: "entity.name.tag.txt"
+      "2":
+        name: "string.quoted.txt"
+    comment: "A key value pair"
+    match: "(\".*?\")\\s*(\".*?\")"
+    name: "entity.name.tag.txt"
+  }
+]
+scopeName: "source.txt"

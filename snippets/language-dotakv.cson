@@ -1,0 +1,310 @@
+'.source.txt':
+  'Team Type':
+    'prefix': 'AbilityBehavior'
+    'body': '"AbilityBehavior"\t\t\t\t\t\t"DOTA_ABILITY_BEHAVIOR_${1:UNIT_TARGET}"\n"AbilityUnitTargetTeam"\t\t\t"DOTA_UNIT_TARGET_TEAM_${2:ENEMY}"\n"AbilityUnitTargetType"\t\t\t"${3:DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC}"\n"AbilityUnitDamageType"\t\t\t"${4:DAMAGE_TYPE_MAGICAL}"'
+  'Point Animation':
+    'prefix': 'AbilityCastRange'
+    'body': '"AbilityCastRange"\t\t\t\t\t"${1:700}"\n"AbilityCastPoint"\t\t\t\t\t"${2:0.3}"\n"AbilityCastAnimation"\t\t\t"ACT_DOTA_${3:CAST_ABILITY_1}"'
+  'ManaCost Damage':
+    'prefix': 'AbilityCooldown'
+    'body': '"AbilityCooldown"\t\t\t\t"${1:8.0}"\n"AbilityManaCost"\t\t\t\t"${2:100}"\n"AbilityDamage"\t\t\t\t\t"${3:75 130 200}"'
+  'Variables':
+    'prefix': 'AbilitySpecial'
+    'body': '"AbilitySpecial"\n{\n\t"01"\n\t{\n\t\t"var_type"\t\t\t"FIELD_INTEGER"\n\t\t"${1:value}"\t\t\t\t "${2:900}"\n\t}\n\t"02"\n\t{\n\t\t"var_type"\t\t\t"FIELD_FLOAT"\n\t\t"${3:duration}"\t\t\t"${4:3.0 4.0 5.0}"\n\t}\n}'
+  'Shared Target scope':
+    'prefix': 'ActOnTargets'
+    'body': '"ActOnTargets"\n{\n\t"Target"\n\t{\n\t\t"Center"  \t"${1:TARGET}"\n\t\t"Radius" \t"%${2:radius}"\n\t\t"Teams" \t"DOTA_UNIT_TARGET_TEAM_${3:ENEMY}"\n\t\t"Types" \t"${4:DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC}"\n\t}\n\n\t"Action"    \n\t{\n\t\t${5:[ACTIONS]}\n\t}\n}'
+  'to a Target':
+    'prefix': 'AddAbility'
+    'body': '"AddAbility"\n{\n\t"Target" \t\t"${1:CASTER}"\n\t"AbilityName"\t"%${2:ability_name}"\n}'
+  'in a modifier':
+    'prefix': 'AllowIllusionDuplicate'
+    'body': '"AllowIllusionDuplicate"     "${1:1}"'
+  'to a Target':
+    'prefix': 'ApplyModifier'
+    'body': '"ApplyModifier"\n{\n\t"ModifierName"\t"modifier_${1:name}"\n\t"Target" \t\t"${2:TARGET}"\n\t"Duration"\t\t"%${3:duration}"\n}'
+  'distinct':
+    'prefix': 'ApplyModifierHero-Creep'
+    'body': '"ApplyModifier"\n{\n\t"ModifierName"\t"modifier_${1:name}"\n\t"Target"\n\t{\n\t\t"Center"\t"TARGET"\n\t\t"Teams"\t\t"DOTA_UNIT_TARGET_TEAM_ENEMY"\n\t\t"Types"\t\t"DOTA_UNIT_TARGET_HERO"\n\t}\n\t"Duration"\t\t"%${2:hero_duration}"\n}\n\n"ApplyModifier"\n{\n\t"ModifierName"\t"modifier_${1:name}"\n\t"Target"\n\t{\n\t\t"Center"\t"TARGET"\n\t\t"Teams"\t\t"DOTA_UNIT_TARGET_TEAM_ENEMY"\n\t\t"Types"\t\t"DOTA_UNIT_TARGET_BASIC"\n\t}\n\t"Duration"\t\t"%${4:creep_duration}"\n}'
+  'Movement':
+    'prefix': 'ApplyMotionController'
+    'body': '"ApplyMotionController"\n// For this: gfycat.com/BraveHideousGiantschnauzer -> check: bit.ly/1KWulqA\n{\n\t"Caster" \t\t"${1:CASTER}"\n    "Target" \t\t"${2:TARGET}"\n    "ScriptFile"    "${3:heroes/hero_name/ability_name.lua}"\n    "HorizontalControlFunction" "${4:TestGravityFunc}"\n    "VerticalControlFunction" \t"${4:TestGravityFunc}"         \n}'
+  'particle on Modifier':
+    'prefix': 'AttachEffect'
+    'body': '"AttachEffect"\n{\n\t"EffectName"\t\t\t\t\t"${1:particle_name}"\n\t"EffectAttachType"\t\t"${2:follow_origin}"\n\t"Target"\t\t\t\t\t\t\t"${3:TARGET}"\n}'
+  'in a modifier':
+    'prefix': 'Attributes'
+    'body': '"Attributes"\t\t"MODIFIER_ATTRIBUTE_${1:MULTIPLE}"'
+  'Constantly Apply Modifier':
+    'prefix': 'Aura'
+    'body': '"Aura"          \t"modifier_${1:name_aura_effect}"\n"Aura_Radius"   \t"%${2:radius}"\n"Aura_Teams"    \t"DOTA_UNIT_TARGET_TEAM_${3:FRIENDLY}"\n"Aura_Types"    \t"${4:DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC}"\n"Aura_Flags"    \t"${5:DOTA_UNIT_TARGET_FLAG_NONE}"\n"Aura_ApplyToCaster" "${6:1}"'
+  'ability_datadriven':
+    'prefix': 'BaseClass'
+    'body': '"BaseClass"             \t\t"ability_datadriven"\n"AbilityTextureName"\t\t\t"${1:ability_name}"\n"MaxLevel" \t\t\t\t\t\t"${2:7}"'
+  'to a Target':
+    'prefix': 'Blink'
+    'body': '"Blink"\n{\n\t"Target" \t\t"${1:TARGET}"\n}'
+  'On Attack':
+    'prefix': 'CleaveAttack'
+    'body': '"CleaveAttack"\n{\n\t"CleavePercent"         "%${1:great_cleave_damage}"\n\t"CleaveRadius"          "%${2:great_cleave_radius}"\n\t"CleaveEffect"          "${3:particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf}"\n}'
+  'Attachment':
+    'prefix': 'ControlPointEntities'
+    'body': '"ControlPointEntities"\n{\n\t"${1:TARGET}"\t"${2:attach_origin}"\n\t"${3:CASTER}"\t"${4:attach_origin}"\n}'
+  'CP1 CP2':
+    'prefix': 'ControlPoints'
+    'body': '"ControlPoints"\n{\n\t"01"\t"%${1:radius} 0 0"\n\t"02"\t"0 0 0"\n}'
+  'Extra hit':
+    'prefix': 'CreateBonusAttack'
+    'body': '"CreateBonusAttack"\n{\n\t"Target" \t\t"${1:TARGET}"\n}'
+  'Entity Thinker':
+    'prefix': 'CreateThinker'
+    'body': '"CreateThinker"\n{\n\t"ModifierName"\t"modifier_${1:name}"\n\t"Target" \t\t"${2:TARGET}"\n}'
+  'Line Thinker':
+    'prefix': 'CreateThinkerWall'
+    'body': '"CreateThinkerWall"\n{\n\t"ModifierName"\t\t"${1:modifier_name}"\n\t"Width"\t\t\t\t"%${2:width}"\n\t"Length"\t\t\t"%${3:length}"\n\t"Rotation"\t\t\t"${4:x} ${5:y} ${6:z}"\n\t"Target" \t\t\t"${7:TARGET}"\n}'
+  'Deal Damage on Target':
+    'prefix': 'Damage'
+    'body': '"Damage"\n{\n\t"Target"\t\t"${1:TARGET}"\n\t"Type"\t\t\t"${2:DAMAGE_TYPE_MAGICAL}"\n\t"Damage"\t\t"%${3:AbilityDamage}"\n}'
+  'Deal Min/MaxDamage':
+    'prefix': 'Damage Min/Max'
+    'body': '"Damage"\n{\n\t"Target"\t\t"${1:TARGET}"\n\t"Type"\t\t\t"${2:DAMAGE_TYPE_MAGICAL}"\n\t"MinDamage"\t\t"%${3:min_damage}"\n\t"MaxDamage"\t\t"%${4:max_damage}"\n}'
+  'Acts after Delay':
+    'prefix': 'DelayedAction'
+    'body': '"DelayedAction"\n{\n\t"Delay"     "%${1:delay}"\n\t"Action"    \n\t{\n\t\t${2:[ACTIONS]}\n\t}\n}'
+  'in Radius on Target':
+    'prefix': 'DestroyTrees'
+    'body': '"DestroyTrees"\n{\n\t"Target" \t\t"${1:TARGET}"\n\t"Radius"\t\t"%${2:radius}"\n}'
+  'Types and Flags':
+    'prefix': 'Exclude'
+    'body': '"ExcludeTypes"\t"${8:DOTA_UNIT_TARGET_MECHANICAL}"\n"ExcludeFlags"\t"${9:DOTA_UNIT_TARGET_FLAG_DEAD}"'
+  'particle on a Target':
+    'prefix': 'FireEffect'
+    'body': '"FireEffect"\n{\n\t"EffectName"        "${1:}"\n\t"EffectAttachType"  "${2:follow_origin}"\n\t"Target"            "${3:TARGET}"\n}'
+  'audible effect':
+    'prefix': 'FireSound'
+    'body': '"FireSound"\n{\n\t"EffectName"\t${1:Hero_Name.AbilityString}\n\t"Target" \t\t"${2:TARGET}"\n}'
+  'in a Target { }':
+    'prefix': 'Flags'
+    'body': '"Flags"     "${1:DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES}"'
+  'Heal function':
+    'prefix': 'Heal'
+    'body': '"Heal"\n{\n\t"Target"        "${1:TARGET}"\n\t"HealAmount"\t"%${2:heal}"\n}'
+  'Boolean':
+    'prefix': 'IsCasterAlive'
+    'body': '"IsCasterAlive"\n{\n\t"OnSuccess"\n\t{\n\t\t${1:[ACTIONS]}\n\t}\n\t"OnFailure"\n\t{\n\t\t${2:[ACTIONS]}\n\t}\n}'
+  'Set Purge Properties':
+    'prefix': 'IsPurgable'
+    'body': '"IsPurgable"\t\t"${1:1}"\n"IsBuff"\t\t\t"${2:1}"\n"IsDebuff"\t\t\t"${3:0}"\n"IsStunDebuff"\t\t"${4:0}"\n${5://Purge(bool RemovePositiveBuffs, bool RemoveDebuffs, bool BuffsCreatedThisFrameOnly, bool RemoveStuns, bool RemoveExceptions)}'
+  'Applies modifier_knockback':
+    'prefix': 'Knockback'
+    'body': '"Knockback"\n{\n\t"Target"            "${1:TARGET}"\n\t"Center" \t        "${2:CASTER}"\n\t"Distance"\t        "%${3:distance}"\n\t"Duration"\t        "%${4:air_time}"\n\t"Height"\t        "${5:200}"\n\t"IsFixedDistance"\t"1"\n\t"ShouldStun"        "1"\t\n}'
+  'of a Target':
+    'prefix': 'LevelUpAbility'
+    'body': '"LevelUpAbility"\n{\n\t"Target" \t\t"${1:CASTER}"\n\t"AbilityName"\t"%${2:ability_name}"\n}'
+  'Heal On Attack':
+    'prefix': 'Lifesteal'
+    'body': '"Lifesteal"\n{\n\t"Target"            "${1:ATTACKER}"\n\t"LifestealPercent"\t"%${2:lifesteal}"\n}'
+  'Create LinearProjectile':
+    'prefix': 'LinearProjectile'
+    'body': '"LinearProjectile"\n{\n    "Target"      \t "${1:POINT}"\n\t"EffectName"\t "${2:particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf}"\n\t"MoveSpeed"\t\t "%${3:projectile_speed}"\n\t"StartRadius"\t "%${4:start_radius}"\n\t"StartPosition"  "${5:attach_attack1}"\n\t"EndRadius"      "%${6:end_radius}"\n\t"HasFrontalCone" "${7:0}"\n\t"FixedDistance"  "%${8:range}"\n\t"TargetTeams"\t "${9:DOTA_UNIT_TARGET_TEAM_ENEMY}"\n\t"TargetTypes"\t "${10:DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO}"\n\t"TargetFlags"\t "${11:DOTA_UNIT_TARGET_FLAG_NONE}"\t\t\t\t\t\t\n    "ProvidesVision" "${12:1}"\n    "VisionRadius" \t "%${13:vision_radius}"\n}'
+  'Random up to MaxTargets':
+    'prefix': 'MaxTargets'
+    'body': '"MaxTargets" "%${1:max_targets}"\n"Random"     "${2:1}"'
+  'Add one modifier':
+    'prefix': 'modifier_'
+    'body': '"modifier_${1:name}"\n{\n\t"Passive"\t\t\t"${2:0}"\n\t"IsHidden"\t\t\t"${3:0}"\n\t"IsDebuff"\t\t\t"${4:0}"\n\n\t"EffectName"\t\t"${6:particle_name}"\n\t"EffectAttachType"\t"${7:follow_origin}"\n\n\t${8:[ACTIONS]}\n}'
+  'Create custom modifiers':
+    'prefix': 'Modifiers'
+    'body': '"Modifiers"\n{\n\t"modifier_${1:name}"\n\t{\n\t\t"Passive"\t\t\t"${2:0}"\n\t\t"IsHidden"\t\t\t"${3:0}"\n\t\t"IsDebuff"\t\t\t"${4:0}"\n\n\t\t"EffectName"\t\t"${6:particle_name}"\n\t\t"EffectAttachType"\t"${7:follow_origin}"\n\n\t\t${8:[ACTIONS]}\n\t}\n}'
+  'Move Unit':
+    'prefix': 'MoveUnit'
+    'body': '"MoveUnit"\n{\n\t"Target"        "${1:TARGET}"\n\t"MoveToTarget"\t"${2:POINT}"\n}'
+  'modifier event':
+    'prefix': 'OnAbilityEndChannel'
+    'body': '"OnAbilityEndChannel"\n// Unit that has this modifier ends a channel (be it OnChannelFinish, Interrupted or Succeeded)\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnAbilityExecuted'
+    'body': '"OnAbilityExecuted"\n// Any ability (including items) was used by the unit with this modifier.\n{\n\t${1:[ACTIONS]}\n}'
+  'Pre CastPoint':
+    'prefix': 'OnAbilityPhaseStart'
+    'body': '"OnAbilityPhaseStart"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnAbilityStart'
+    'body': '"OnAbilityStart"\n// OnSpellStart as a Modifier Event, you can Apply it on a target to trigger any Actions.\n{\n\t${1:[ACTIONS]}\n}'
+  'Completed Miss or Hit':
+    'prefix': 'OnAttack'
+    'body': '"OnAttack"\n{\n\t${1:[ACTIONS]}\n}'
+  'Hit Friendly':
+    'prefix': 'OnAttackAllied'
+    'body': '"OnAttackAllied"\n{\n\t${1:[ACTIONS]}\n}'
+  'By ATTACKER':
+    'prefix': 'OnAttacked'
+    'body': '"OnAttacked"\n// "%attack_damage" is set to the damage value after mitigation\n{\n\t${1:[ACTIONS]}\n}'
+  'Miss':
+    'prefix': 'OnAttackFailed'
+    'body': '"OnAttackFailed"\n// "%attack_damage" is set to the damage value before mitigation\n{\n\t${1:[ACTIONS]}\n}'
+  'Hit':
+    'prefix': 'OnAttackLanded'
+    'body': '"OnAttackLanded"\n// "%attack_damage" is set to the damage value before mitigation\n{\n\t${1:[ACTIONS]}\n}'
+  'Animation started':
+    'prefix': 'OnAttackStart'
+    'body': '"OnAttackStart"\n{\n\t${1:[ACTIONS]}\n}'
+  'Fires in any case':
+    'prefix': 'OnChannelFinish'
+    'body': '"OnChannelFinish"\n{\n\t${1:[ACTIONS]}\n}'
+  'Prematurely':
+    'prefix': 'OnChannelInterrupted'
+    'body': '"OnChannelInterrupted"\n{\n\t${1:[ACTIONS]}\n}'
+  'Completed':
+    'prefix': 'OnChannelSucceeded'
+    'body': '"OnChannelSucceeded"\n{\n\t${1:[ACTIONS]}\n}'
+  'Modifier Created':
+    'prefix': 'OnCreated'
+    'body': '"OnCreated"\n{\n\t${1:[ACTIONS]}\n}'
+  'Modifier owner dealt':
+    'prefix': 'OnDealDamage'
+    'body': '"OnDealDamage"\n// "%attack_damage" is set to the damage value after mitigation\n{\n\t${1:[ACTIONS]}\n}'
+  'modf owner dies':
+    'prefix': 'OnDeath'
+    'body': '"OnDeath"\n{\n\t${1:[ACTIONS]}\n}'
+  'Modifier Removed':
+    'prefix': 'OnDestroy'
+    'body': '"OnDestroy"\n{\n\t${1:[ACTIONS]}\n}'
+  'Item picked up':
+    'prefix': 'OnEquip'
+    'body': '"OnEquip"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnHealReceived'
+    'body': '"OnHealReceived"\n// Example: Oracle ult\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnHealthGained'
+    'body': '"OnHealthGained"\n// Example: Wisp Tether\n{\n\t${1:[ACTIONS]}\n}'
+  'modf owner kill hero':
+    'prefix': 'OnHeroKilled'
+    'body': '"OnHeroKilled"\n{\n\t${1:[ACTIONS]}\n}'
+  'Repeat Actions':
+    'prefix': 'OnIntervalThink'
+    'body': '"OnIntervalThink"\n{\n\t${1:[ACTIONS]}\n}'
+  'modf owner killed anything':
+    'prefix': 'OnKill'
+    'body': '"OnKill"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnManaGained'
+    'body': '"OnManaGained"\n// Example: Wisp Tether\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnOrder'
+    'body': '"OnOrder"\n// Triggers on Move/Casting/Hold/Stop\n{\n\t${1:[ACTIONS]}\n}'
+  'Ability owner dies':
+    'prefix': 'OnOwnerDied'
+    'body': '"OnOwnerDied"\n{\n\t${1:[ACTIONS]}\n}'
+  'Ability owner spaw':
+    'prefix': 'OnOwnerSpawned'
+    'body': '"OnOwnerSpawned"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnProjectileDodge'
+    'body': '"OnProjectileDodge"\n// The unit with this modifier dodged a projectile.\n{\n\t${1:[ACTIONS]}\n}'
+  'Fix Distance':
+    'prefix': 'OnProjectileFinish'
+    'body': '"OnProjectileFinish"\n{\n\t${1:[ACTIONS]}\n}'
+  'Target detect':
+    'prefix': 'OnProjectileHitUnit'
+    'body': '"OnProjectileHitUnit"\n{\n\t"DeleteOnHit"\t"${1:1}"\n\t${2:[ACTIONS]}\n}'
+  'modf owner respawns':
+    'prefix': 'OnRespawn'
+    'body': '"OnRespawn"\n{\n\t${1:[ACTIONS]}\n}'
+  'Finished Cast Point':
+    'prefix': 'OnSpellStart'
+    'body': '"OnSpellStart"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnSpentMana'
+    'body': '"OnSpentMana"\n// Example: Nether ward\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnStateChanged'
+    'body': '"OnStateChanged"\n// Might trigger when the unit gets a modifier.\n{\n\t${1:[ACTIONS]}\n}'
+  'modf owner took dmg':
+    'prefix': 'OnTakeDamage'
+    'body': '"OnTakeDamage"\n// "%attack_damage" is set to the damage value after mitigation\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnTeleported'
+    'body': '"OnTeleported"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnTeleporting'
+    'body': '"OnTeleporting"\n{\n\t${1:[ACTIONS]}\n}'
+  'BEHAVIOR_TOGGLE':
+    'prefix': 'OnToggleOff'
+    'body': '"OnToggleOff"\n{\n\t${1:[ACTIONS]}\n}'
+  'BEHAVIOR_TOGGLE':
+    'prefix': 'OnToggleOn'
+    'body': '"OnToggleOn"\n{\n\t${1:[ACTIONS]}\n}'
+  'Item dropped':
+    'prefix': 'OnUnequip'
+    'body': '"OnUnequip"\n{\n\t${1:[ACTIONS]}\n}'
+  'modifier event':
+    'prefix': 'OnUnitMoved'
+    'body': '"OnUnitMoved"\n// Example: Bloodseeker ult\n{\n\t${1:[ACTIONS]}\n}'
+  'Ability Leveled':
+    'prefix': 'OnUpgrade'
+    'body': '"OnUpgrade"\n{\n\t${1:[ACTIONS]}\n}'
+  'Modifier Event+Actions':
+    'prefix': 'Orb'
+    'body': '"Orb"\n{\n\t"Priority"\t\t\t"DOTA_ORB_PRIORITY_ABILITY"\n\t"ProjectileName"    "${1:tracking_projectile_name}"\n\t"CastAttack"\t\t"1"\n}\n\n"OnOrbFire"\n{\n\t"SpendMana"\n\t{\n\t\t"Mana"\t\t"%${2:AbilityManaCost}"\n\t}\n\t\n\t${3:[ACTIONS]}\n}\n\n"OnOrbImpact"\n{\n\t${4:[ACTIONS]}\n}'
+  'in a modifier':
+    'prefix': 'OverrideAnimation'
+    'body': '"OverrideAnimation"     "${1:ACT_DOTA_CAST_ABILITY_1}"'
+  'inside precache resource':
+    'prefix': 'particle'
+    'body': '"particle"  "${1:particle_name}"'
+  'DataDriven resource list':
+    'prefix': 'precache'
+    'body': '"precache"\n{\n\t"particle"  "${1:particle_name}"\n\t"soundfile" "soundevents/game_sounds_heroes/game_sounds_${2:HERO}.vsndevts"\n}'
+  'Apply Modifier Properties':
+    'prefix': 'Properties'
+    'body': '"Properties"\n{\n\t"${1:MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}" "%${2:bonus_attack_speed}"\n    "${3:MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}" "%${4:bonus_movement_speed}" \n}'
+  'Add RNG to a Random':
+    'prefix': 'PseudoRandom'
+    'body': '"PseudoRandom" "${1:DOTA_PSEUDO_RANDOM_JUGG_CRIT}"'
+  'Random chance':
+    'prefix': 'Random'
+    'body': '"Random"\n{\n\t"Chance"\t\t\t"%${1:chance}"\n\t"OnSuccess"\n\t{\n\t\t${2:[ACTIONS]}\n\t}\n\t"OnFailure"\n\t{\n\t\t${3:[ACTIONS]}\n\t}\n}'
+  'from a Target':
+    'prefix': 'RemoveModifier'
+    'body': '"RemoveModifier"\n{\n\t"ModifierName"\t"modifier_${1:name}"\n\t"Target" \t\t"${2:TARGET}"\n}'
+  'Target by UnitName':
+    'prefix': 'ReplaceUnit'
+    'body': '"ReplaceUnit"\n{\n\t"UnitName"      "${1:npc_name}"\n\t"Target"        "${2:TARGET}"\n}'
+  'Run a lua script':
+    'prefix': 'RunScript'
+    'body': '"RunScript"\n{\n\t"ScriptFile"\t"${1:heroes/hero_name/ability_name.lua}"\n\t"Function"\t\t"${2:AbilityName}"\n}'
+  'from npc_units _custom':
+    'prefix': 'SpawnUnit'
+    'body': '"SpawnUnit"\n{\n\t"UnitName"\t\t"${1:npc_name}"\n\t"Target" \t\t"${2:CASTER}"\n\t"Duration"\t\t"%${3:duration}"\n\t"UnitCount"\t\t"${4:1}"\n\t"UnitLimit"\t\t"0"\n\t"GrantsGold"\t"1"\n\t"GrantsXP"\t\t"1"\n\t"SpawnRadius"\t"10"\n\t"OnSpawn"\n\t{\n\t\t"ApplyModifier"\n\t\t{\n\t\t\t"ModifierName"\t"modifier_phased"\n\t\t\t"Target"\t\t"TARGET"\n\t\t\t"Duration"\t\t"0.03"\n\t\t}\n\n\t\t${5:[ACTIONS]}\n\t}\n}'
+  'item modf owner event':
+    'prefix': 'SpendCharge'
+    'body': '"SpendCharge" {}'
+  'modf owner event':
+    'prefix': 'SpendMana'
+    'body': '"SpendMana"\n{\n\t"Mana"\t\t"%${1:AbilityManaCost}"\n}'
+  'Apply Modifier States':
+    'prefix': 'States'
+    'body': '"States"\n{\n\t"${1:MODIFIER_STATE_STUNNED}"\t\t"${2:MODIFIER_STATE_VALUE_ENABLED}"\n}'
+  'Texture Particles':
+    'prefix': 'StatusEffectName'
+    'body': '"StatusEffectName" \t\t"${1:particle_name}" \t   \n"StatusEffectPriority"  "10"'
+  'Applies modifier_stunned':
+    'prefix': 'Stun'
+    'body': '"Stun"\n{\n\t"Duration"   "%${1:mini_stun}"\n\t"Target" \t "${2:TARGET}"\n}'
+  'Center Radius':
+    'prefix': 'Target'
+    'body': '"Target"\n{\n\t"Center"  \t"${1:TARGET}"\n\t"Radius" \t"%${2:radius}"\n\t"Teams" \t"${3:DOTA_UNIT_TARGET_TEAM_ENEMY}"\n\t"Types" \t"${4:DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC}"\n}'
+  'Length Thickness':
+    'prefix': 'Target Line'
+    'body': '"Target"\n{\n\t"Center"  \t"${1:TARGET}"\n\t"Line"\n\t{\n\t\t"Length" \t\t"${2:1000}"\n\t\t"Thickness" \t"${3:1000}"\n\t}\n\t"Teams" \t"${4:DOTA_UNIT_TARGET_TEAM_ENEMY}"\n\t"Types" \t"${5:DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC}"\n}'
+  'in Lua':
+    'prefix': 'Target ScriptSelectPoints'
+    'body': '"Target"\n{\n\t"Center"\t\t    "${1:CASTER}"\n\t"ScriptSelectPoints"\n\t{\n\t\t"ScriptFile"    "${2:heroes/hero_name/ability_name.lua}"\n\t\t"Function"      "${3:GetPointsFunction}"\n\t\t"Target"\t\t"${4:CASTER}"\n\t\t"Count"\t\t\t"${5:2}"\n\t}\n}'
+  'Repeat Actions':
+    'prefix': 'ThinkInterval'
+    'body': '"ThinkInterval"  "${1:1.0}"\n"OnIntervalThink"\n{\n\t${2:[ACTIONS]}\n}'
+  'Create TrackingProjectile':
+    'prefix': 'TrackingProjectile'
+    'body': '"TrackingProjectile"\n{\n\t"Target"           \t"${1:TARGET}"\n\t"EffectName"\t\t"${2:particles/base_attacks/ranged_tower_bad.vpcf}"\n\t"Dodgeable"\t\t\t"${3:1}"\n\t"ProvidesVision"\t"${4:1}"\n\t"VisionRadius"\t\t"${5:%vision_radius}"\n\t"MoveSpeed"        \t"${6:%projectile_speed}"\n\t"SourceAttachment"\t"${7:DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"}\n}'
